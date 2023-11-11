@@ -25,6 +25,7 @@ func (h *Handler) GetMetadata(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
+	log.Printf("Retrieving movie metadata with %v\n", id)
 
 	ctx := r.Context()
 	m, err := h.controller.Get(ctx, id)
