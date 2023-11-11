@@ -2,6 +2,7 @@ package http
 
 import (
 	"encoding/json"
+	"errors"
 	"log"
 	"net/http"
 
@@ -28,12 +29,17 @@ func (h *Handler) Handle(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
+	log.Printf("Retrieving aggregated rating with recordId: %v and  recordType: %v \n", recordId, recordType)
 
 	switch r.Method {
 	case http.MethodGet:
 		{
 			val, err := h.ctrl.GetAggreatedRating(r.Context(), model.RecordType(recordType), model.RecordID(recordId))
-			if err != nil {
+			if err != nil && errors.Is(err, controller.ErrNotFound) {
+				log.Printf("Repository error in get: %v", err.Error())
+				w.WriteHeader(http.StatusNotFound)
+				return
+			} else if err != nil {
 				log.Printf("Repository error in get: %v", err.Error())
 				w.WriteHeader(http.StatusInternalServerError)
 				return
