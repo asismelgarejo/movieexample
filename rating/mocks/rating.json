@@ -1,0 +1,24 @@
+{
+  "movie": {
+    "1": [
+      {
+        "recordId": "1",
+        "recordType": "movie",
+        "userId": "1",
+        "ratingValue": 3
+      },
+      {
+        "recordId": "1",
+        "recordType": "movie",
+        "userId": "2",
+        "ratingValue": 3
+      },
+      {
+        "recordId": "1",
+        "recordType": "movie",
+        "userId": "3",
+        "ratingValue": 3
+      }
+    ]
+  }
+}
