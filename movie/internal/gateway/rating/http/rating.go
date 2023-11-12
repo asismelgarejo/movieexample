@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"log"
 	"math/rand"
 	"net/http"
 
@@ -66,7 +67,7 @@ func (g *Gateway) PutRating(ctx context.Context, recordType model.RecordType, re
 		return err
 	}
 	url := "http://" + addrs[rand.Intn(len(addrs))] + "/rating"
-
+	log.Printf("Calling metadata service. Request: GET " + url)
 	req, err := http.NewRequest(http.MethodPost, url, bytes.NewBuffer(jsonData))
 
 	if err != nil {

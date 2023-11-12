@@ -20,6 +20,7 @@ type Gateway struct {
 
 // New creates a new HTTP movie gateway for a movie metadata service.
 func New(registry discovery.Registry) *Gateway {
+	// func New(registry discovery.Registry) *Gateway {
 	return &Gateway{registry: registry}
 }
 
@@ -32,6 +33,7 @@ func (g *Gateway) Get(ctx context.Context, id string) (*metadata.Metadata, error
 	}
 	url := "http://" + addrs[rand.Intn(len(addrs))] + "/metadata"
 
+	log.Printf("Calling metadata service. Request: GET " + url)
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		return nil, err
@@ -58,6 +60,5 @@ func (g *Gateway) Get(ctx context.Context, id string) (*metadata.Metadata, error
 	if err = json.NewDecoder(resp.Body).Decode(&metadata); err != nil {
 		return nil, err
 	}
-	log.Print("metadata", metadata)
 	return metadata, nil
 }
