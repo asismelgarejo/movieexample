@@ -17,10 +17,10 @@ service MetadataService{
     rpc PutMetadata(PutMetadataRequest) returns (PutMetadataResponse);
 }
 
-message GetMetadataResponse{
+message GetMetadataRequest{
     string movie_id = 1;
 }
-message GetMetadataRequest{
+message GetMetadataResponse{
     Metadata metadata = 1;
 }
 message PutMetadataRequest{

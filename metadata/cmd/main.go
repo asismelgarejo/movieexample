@@ -5,11 +5,15 @@ import (
 	"flag"
 	"fmt"
 	"log"
-	"net/http"
+	"net"
 	"time"
 
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
+
+	"movieexample.com/gen"
 	controller "movieexample.com/metadata/internal/controller/metadata"
-	handlers "movieexample.com/metadata/internal/handler/http"
+	grpchandler "movieexample.com/metadata/internal/handler/grpc"
 	"movieexample.com/metadata/internal/repository/memory"
 	"movieexample.com/pkg/discovery"
 	"movieexample.com/pkg/discovery/consul"
@@ -46,7 +50,17 @@ func main() {
 
 	memory := memory.New()
 	ctrl := controller.New(memory)
-	h := handlers.New(ctrl)
-	http.Handle("/metadata", http.HandlerFunc(h.GetMetadata))
-	log.Panic(http.ListenAndServe(fmt.Sprintf(":%d", port), nil))
+
+	h := grpchandler.New(ctrl)
+	lis, err := net.Listen("tcp", fmt.Sprintf("localhost:%d", port))
+	if err != nil {
+		log.Fatalf("failed to listen: %v", err)
+	}
+	srv := grpc.NewServer()
+	reflection.Register(srv)
+	gen.RegisterMetadataServiceServer(srv, h)
+	// http.Handle("/metadata", http.HandlerFunc(h.GetMetadata))
+
+	// log.Panic(http.ListenAndServe(fmt.Sprintf(":%d", port), nil))
+	log.Panic(srv.Serve(lis), nil)
 }

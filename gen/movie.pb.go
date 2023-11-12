@@ -146,7 +146,7 @@ func (x *MovieDetails) GetMetadata() *Metadata {
 	return nil
 }
 
-type GetMetadataResponse struct {
+type GetMetadataRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -154,57 +154,10 @@ type GetMetadataResponse struct {
 	MovieId string `protobuf:"bytes,1,opt,name=movie_id,json=movieId,proto3" json:"movie_id,omitempty"`
 }
 
-func (x *GetMetadataResponse) Reset() {
-	*x = GetMetadataResponse{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_movie_proto_msgTypes[2]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *GetMetadataResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetMetadataResponse) ProtoMessage() {}
-
-func (x *GetMetadataResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_movie_proto_msgTypes[2]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetMetadataResponse.ProtoReflect.Descriptor instead.
-func (*GetMetadataResponse) Descriptor() ([]byte, []int) {
-	return file_movie_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *GetMetadataResponse) GetMovieId() string {
-	if x != nil {
-		return x.MovieId
-	}
-	return ""
-}
-
-type GetMetadataRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Metadata *Metadata `protobuf:"bytes,1,opt,name=metadata,proto3" json:"metadata,omitempty"`
-}
-
 func (x *GetMetadataRequest) Reset() {
 	*x = GetMetadataRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_movie_proto_msgTypes[3]
+		mi := &file_movie_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -217,7 +170,7 @@ func (x *GetMetadataRequest) String() string {
 func (*GetMetadataRequest) ProtoMessage() {}
 
 func (x *GetMetadataRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_movie_proto_msgTypes[3]
+	mi := &file_movie_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -230,10 +183,57 @@ func (x *GetMetadataRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetMetadataRequest.ProtoReflect.Descriptor instead.
 func (*GetMetadataRequest) Descriptor() ([]byte, []int) {
+	return file_movie_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *GetMetadataRequest) GetMovieId() string {
+	if x != nil {
+		return x.MovieId
+	}
+	return ""
+}
+
+type GetMetadataResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Metadata *Metadata `protobuf:"bytes,1,opt,name=metadata,proto3" json:"metadata,omitempty"`
+}
+
+func (x *GetMetadataResponse) Reset() {
+	*x = GetMetadataResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_movie_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetMetadataResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetMetadataResponse) ProtoMessage() {}
+
+func (x *GetMetadataResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_movie_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetMetadataResponse.ProtoReflect.Descriptor instead.
+func (*GetMetadataResponse) Descriptor() ([]byte, []int) {
 	return file_movie_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *GetMetadataRequest) GetMetadata() *Metadata {
+func (x *GetMetadataResponse) GetMetadata() *Metadata {
 	if x != nil {
 		return x.Metadata
 	}
@@ -645,12 +645,12 @@ var file_movie_proto_rawDesc = []byte{
 	0x06, 0x72, 0x61, 0x74, 0x69, 0x6e, 0x67, 0x18, 0x01, 0x20, 0x01, 0x28, 0x02, 0x52, 0x06, 0x72,
 	0x61, 0x74, 0x69, 0x6e, 0x67, 0x12, 0x25, 0x0a, 0x08, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74,
 	0x61, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x09, 0x2e, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61,
-	0x74, 0x61, 0x52, 0x08, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x22, 0x30, 0x0a, 0x13,
-	0x47, 0x65, 0x74, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x12, 0x19, 0x0a, 0x08, 0x6d, 0x6f, 0x76, 0x69, 0x65, 0x5f, 0x69, 0x64, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x6f, 0x76, 0x69, 0x65, 0x49, 0x64, 0x22, 0x3b,
-	0x0a, 0x12, 0x47, 0x65, 0x74, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x65, 0x71,
-	0x75, 0x65, 0x73, 0x74, 0x12, 0x25, 0x0a, 0x08, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
+	0x74, 0x61, 0x52, 0x08, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x22, 0x2f, 0x0a, 0x12,
+	0x47, 0x65, 0x74, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x12, 0x19, 0x0a, 0x08, 0x6d, 0x6f, 0x76, 0x69, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x6f, 0x76, 0x69, 0x65, 0x49, 0x64, 0x22, 0x3c, 0x0a,
+	0x13, 0x47, 0x65, 0x74, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x25, 0x0a, 0x08, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
 	0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x09, 0x2e, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74,
 	0x61, 0x52, 0x08, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x22, 0x3b, 0x0a, 0x12, 0x50,
 	0x75, 0x74, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
@@ -728,8 +728,8 @@ var file_movie_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_movie_proto_goTypes = []interface{}{
 	(*Metadata)(nil),                    // 0: Metadata
 	(*MovieDetails)(nil),                // 1: MovieDetails
-	(*GetMetadataResponse)(nil),         // 2: GetMetadataResponse
-	(*GetMetadataRequest)(nil),          // 3: GetMetadataRequest
+	(*GetMetadataRequest)(nil),          // 2: GetMetadataRequest
+	(*GetMetadataResponse)(nil),         // 3: GetMetadataResponse
 	(*PutMetadataRequest)(nil),          // 4: PutMetadataRequest
 	(*PutMetadataResponse)(nil),         // 5: PutMetadataResponse
 	(*GetAggregatedRatingResponse)(nil), // 6: GetAggregatedRatingResponse
@@ -741,15 +741,15 @@ var file_movie_proto_goTypes = []interface{}{
 }
 var file_movie_proto_depIdxs = []int32{
 	0,  // 0: MovieDetails.metadata:type_name -> Metadata
-	0,  // 1: GetMetadataRequest.metadata:type_name -> Metadata
+	0,  // 1: GetMetadataResponse.metadata:type_name -> Metadata
 	0,  // 2: PutMetadataRequest.metadata:type_name -> Metadata
 	1,  // 3: GetMovieDetailsResponse.movie_details:type_name -> MovieDetails
-	3,  // 4: MetadataService.GetMetadata:input_type -> GetMetadataRequest
+	2,  // 4: MetadataService.GetMetadata:input_type -> GetMetadataRequest
 	4,  // 5: MetadataService.PutMetadata:input_type -> PutMetadataRequest
 	7,  // 6: RatingService.GetAggregatedRating:input_type -> GetAggregatedRatingRequest
 	8,  // 7: RatingService.PutRating:input_type -> PutRatingRequest
 	10, // 8: MovieService.GetMovieDetails:input_type -> GetMovieDetailsRequest
-	2,  // 9: MetadataService.GetMetadata:output_type -> GetMetadataResponse
+	3,  // 9: MetadataService.GetMetadata:output_type -> GetMetadataResponse
 	5,  // 10: MetadataService.PutMetadata:output_type -> PutMetadataResponse
 	6,  // 11: RatingService.GetAggregatedRating:output_type -> GetAggregatedRatingResponse
 	9,  // 12: RatingService.PutRating:output_type -> PutRatingResponse
@@ -792,7 +792,7 @@ func file_movie_proto_init() {
 			}
 		}
 		file_movie_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetMetadataResponse); i {
+			switch v := v.(*GetMetadataRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -804,7 +804,7 @@ func file_movie_proto_init() {
 			}
 		}
 		file_movie_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetMetadataRequest); i {
+			switch v := v.(*GetMetadataResponse); i {
 			case 0:
 				return &v.state
 			case 1:
