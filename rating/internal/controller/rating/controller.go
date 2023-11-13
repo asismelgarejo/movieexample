@@ -26,7 +26,7 @@ func New(repo ratingRepository) *Controller {
 func (c *Controller) GetAggreatedRating(ctx context.Context, recordType model.RecordType, recordId model.RecordID) (float64, error) {
 	ratings, err := c.repo.Get(ctx, recordType, recordId)
 	if err != nil {
-		return 0, ErrNotFound
+		return 0, err
 	}
 
 	sum := float64(0)

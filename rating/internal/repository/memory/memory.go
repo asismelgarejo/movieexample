@@ -7,7 +7,8 @@ import (
 	"os"
 	"path/filepath"
 
-	repository "movieexample.com/rating/internal/repository"
+	repository "movieexample.com/rating/internal/controller/rating"
+	// repository "movieexample.com/rating/internal/repository"
 	"movieexample.com/rating/pkg/model"
 )
 

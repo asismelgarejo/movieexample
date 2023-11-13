@@ -30,7 +30,7 @@ func (h *Handler) GetAggregatedRating(ctx context.Context, req *gen.GetAggregate
 	v, err := h.ctrl.GetAggreatedRating(ctx, model.RecordType(req.RecordType), model.RecordID(req.RecordId))
 
 	if err != nil && errors.Is(err, rating.ErrNotFound) {
-		return nil, status.Errorf(codes.NotFound, err.Error())
+		// return nil, status.Errorf(codes.NotFound, err.Error())
 	} else if err != nil {
 		return nil, status.Errorf(codes.Internal, err.Error())
 
