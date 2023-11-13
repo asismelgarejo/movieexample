@@ -38,7 +38,7 @@ func main() {
 	}
 	log.Printf("Starting the metadata service on port %v", cfg.APIConfig.Port)
 
-	registry, err := consul.NewRegistry("localhost:8500")
+	registry, err := consul.NewRegistry(fmt.Sprintf("go_consul:%v", cfg.APIConfig.PortConsul))
 	if err != nil {
 		panic(err)
 	}
@@ -68,7 +68,8 @@ func main() {
 	ctrl := controller.New(repo)
 
 	h := grpchandler.New(ctrl)
-	lis, err := net.Listen("tcp", fmt.Sprintf("localhost:%s", cfg.APIConfig.Port))
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%s", cfg.APIConfig.Port)) // An empty string to listen on all available network interfaces.
+	// lis, err := net.Listen("tcp", fmt.Sprintf("localhost:%s", cfg.APIConfig.Port))
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}

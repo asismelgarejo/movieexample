@@ -3,7 +3,6 @@ package mysql
 import (
 	"context"
 	"database/sql"
-	"log"
 
 	_ "github.com/go-sql-driver/mysql"
 	"movieexample.com/metadata/internal/repository"
@@ -15,7 +14,8 @@ type Repository struct {
 }
 
 func New() (*Repository, error) {
-	db, err := sql.Open("mysql", "root:password@/movieexample")
+	db, err := sql.Open("mysql", "root:password@tcp(movieexample_db:3306)/movieexample")
+	// db, err := sql.Open("mysql", "root:password@/movieexample")
 	if err != nil {
 		return nil, err
 	}
@@ -42,7 +42,6 @@ func (r *Repository) Get(ctx context.Context, id string) (*models.Metadata, erro
 
 // Put adds movie metadata for a given movie id.
 func (r *Repository) Put(ctx context.Context, id string, metadata *models.Metadata) error {
-	log.Print("asdasdasd", id, metadata)
 	_, err := r.db.ExecContext(
 		ctx,
 		"INSERT INTO movies (id,title, description, director) VALUES (?, ?, ?, ?)", id, metadata.Title, metadata.Description, metadata.Director)

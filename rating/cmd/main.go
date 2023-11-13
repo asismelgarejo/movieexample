@@ -37,7 +37,7 @@ func main() {
 	}
 	log.Printf("Starting the rating service on port %v", cfg.APIConfig.Port)
 
-	registry, err := consul.NewRegistry("localhost:8500")
+	registry, err := consul.NewRegistry(fmt.Sprintf("go_consul:%v", cfg.APIConfig.PortConsul))
 	if err != nil {
 		panic(err)
 	}
