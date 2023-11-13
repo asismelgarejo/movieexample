@@ -47,7 +47,7 @@ func main() {
 	defer registry.Deregister(ctx, instanceID, serviceName)
 
 	repo := repository.New()
-	ctrl := controller.New(repo)
+	ctrl := controller.New(repo, nil)
 	// -----------------------
 	h := grpchandler.New(ctrl)
 	lis, err := net.Listen("tcp", fmt.Sprintf("localhost:%v", port))
