@@ -15,7 +15,7 @@ import (
 	"movieexample.com/pkg/discovery/consul"
 	controller "movieexample.com/rating/internal/controller/rating"
 	grpchandler "movieexample.com/rating/internal/handler/grpc"
-	repository "movieexample.com/rating/internal/repository/memory"
+	repository "movieexample.com/rating/internal/repository/mysql"
 )
 
 const serviceName = "rating"
@@ -46,7 +46,10 @@ func main() {
 
 	defer registry.Deregister(ctx, instanceID, serviceName)
 
-	repo := repository.New()
+	repo, err := repository.New()
+	if err != nil {
+		panic(err)
+	}
 	ctrl := controller.New(repo, nil)
 	// -----------------------
 	h := grpchandler.New(ctrl)

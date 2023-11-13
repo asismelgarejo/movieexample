@@ -14,7 +14,7 @@ import (
 	"movieexample.com/gen"
 	controller "movieexample.com/metadata/internal/controller/metadata"
 	grpchandler "movieexample.com/metadata/internal/handler/grpc"
-	"movieexample.com/metadata/internal/repository/memory"
+	repository "movieexample.com/metadata/internal/repository/mysql"
 	"movieexample.com/pkg/discovery"
 	"movieexample.com/pkg/discovery/consul"
 )
@@ -48,8 +48,12 @@ func main() {
 
 	defer registry.Deregister(ctx, instanceID, serviceName)
 
-	memory := memory.New()
-	ctrl := controller.New(memory)
+	repo, err := repository.New()
+	if err != nil {
+		panic(err)
+	}
+
+	ctrl := controller.New(repo)
 
 	h := grpchandler.New(ctrl)
 	lis, err := net.Listen("tcp", fmt.Sprintf("localhost:%d", port))
