@@ -13,8 +13,8 @@ func MetadataToProto(m *Metadata) *gen.Metadata {
 }
 
 // MetadataFromProto converts a proto counterpart to a Metadata struct
-func MetadataFromProto(m *gen.Metadata) Metadata {
-	return Metadata{
+func MetadataFromProto(m *gen.Metadata) *Metadata {
+	return &Metadata{
 		ID:          m.Id,
 		Title:       m.Title,
 		Description: m.Description,
