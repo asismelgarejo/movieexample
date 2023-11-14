@@ -44,7 +44,8 @@ func main() {
 
 	ctx := context.Background()
 	instanceID := discovery.GenerateInstanceID(serviceName)
-	if err = registry.Register(ctx, instanceID, serviceName, fmt.Sprintf("%v:%v", "localhost", cfg.APIConfig.Port)); err != nil {
+	// if err = registry.Register(ctx, instanceID, serviceName, fmt.Sprintf("%v:%v", "localhost", cfg.APIConfig.Port)); err != nil {
+	if err = registry.Register(ctx, instanceID, serviceName, fmt.Sprintf("%v:%v", "container_rating", cfg.APIConfig.Port)); err != nil {
 		panic(err)
 	}
 	go func() {
@@ -65,7 +66,7 @@ func main() {
 	ctrl := controller.New(repo, nil)
 	// -----------------------
 	h := grpchandler.New(ctrl)
-	lis, err := net.Listen("tcp", fmt.Sprintf("localhost:%v", cfg.APIConfig.Port))
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%s", cfg.APIConfig.Port)) // An empty string to listen on all available network interfaces.
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}

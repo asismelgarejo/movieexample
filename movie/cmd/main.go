@@ -39,16 +39,17 @@ func main() {
 	if err := yaml.NewDecoder(f).Decode(&cfg); err != nil {
 		panic(err)
 	}
-	log.Printf("Starting the movie service on port %v", cfg.APIConfig.Port)
+	log.Printf("Starting the movie service on port %v", cfg.GRPCConfig.Port)
 
-	registry, err := consul.NewRegistry(fmt.Sprintf("go_consul:%v", cfg.APIConfig.PortConsul))
+	registry, err := consul.NewRegistry(fmt.Sprintf("go_consul:%v", cfg.ConsulConfig.Port))
 	if err != nil {
 		panic(err)
 	}
 
 	ctx := context.Background()
 	instanceID := discovery.GenerateInstanceID(serviceName)
-	if err = registry.Register(ctx, instanceID, serviceName, fmt.Sprintf("%v:%v", "localhost", cfg.APIConfig.Port)); err != nil {
+	// if err = registry.Register(ctx, instanceID, serviceName, fmt.Sprintf("%v:%v", "localhost", cfg.GRPCConfig.Port)); err != nil {
+	if err = registry.Register(ctx, instanceID, serviceName, fmt.Sprintf("%v:%v", "container_movie", cfg.GRPCConfig.Port)); err != nil {
 		panic(err)
 	}
 	go func() {
@@ -68,14 +69,14 @@ func main() {
 
 	go func() {
 		grpcHandler := grpchandler.New(ctrl)
-		lis, err := net.Listen("tcp", fmt.Sprintf("localhost:%v", cfg.APIConfig.Port))
+		lis, err := net.Listen("tcp", fmt.Sprintf(":%s", cfg.GRPCConfig.Port)) // An empty string to listen on all available network interfaces.
 		if err != nil {
 			log.Fatalf("failed to listen: %v", err)
 		}
 		srv := grpc.NewServer()
 		reflection.Register(srv)
 		gen.RegisterMovieServiceServer(srv, grpcHandler)
-		log.Printf("tcp server started %v", cfg.APIConfig.Port)
+		log.Printf("tcp server started %v", cfg.GRPCConfig.Port)
 		log.Panic(srv.Serve(lis))
 	}()
 

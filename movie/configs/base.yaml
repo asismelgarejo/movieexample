@@ -1,3 +1,6 @@
 api:
+  port: 8084
+grpc:
   port: 8083
-  port_consul: 8500
+consul:
+  port: 8500
