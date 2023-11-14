@@ -3,7 +3,6 @@ package controller
 import (
 	"context"
 	"errors"
-	"fmt"
 
 	metadata "movieexample.com/metadata/pkg/models"
 	"movieexample.com/movie/internal/gateway"
@@ -43,7 +42,6 @@ func (c *Controller) Get(ctx context.Context, id string) (*model.MovieDetails, e
 	} else if err != nil {
 		return nil, err
 	}
-	fmt.Println("rating", rating)
 	movieDetails.Rating = rating
 	return movieDetails, nil
 }
