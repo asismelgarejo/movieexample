@@ -8,6 +8,9 @@ import (
 	models "movieexample.com/metadata/pkg/models"
 )
 
+// ErrNotFound is returned when a requested record is not found.
+var ErrNotFound = errors.New("not found")
+
 type metadataRepository interface {
 	Get(ctx context.Context, id string) (*models.Metadata, error)
 	Put(ctx context.Context, id string, metadata *models.Metadata) error
@@ -24,6 +27,8 @@ func New(repo metadataRepository) *Controller {
 func (c *Controller) Get(ctx context.Context, id string) (*models.Metadata, error) {
 	res, err := c.repository.Get(ctx, id)
 	if err != nil && errors.Is(err, repository.ErrNotFound) {
+		return nil, err
+	} else if err != nil {
 		return nil, err
 	}
 	return res, nil
