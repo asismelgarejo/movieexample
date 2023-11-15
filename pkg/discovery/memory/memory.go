@@ -62,9 +62,9 @@ func (r *Registry) ReportHealthyState(instanceID string, serviceName string) err
 	return nil
 }
 
-// ServiceAddresses returns the list of addresses of
+// ServiceAddress returns the list of addresses of
 // active instances of the given service.
-func (r *Registry) ServiceAddresses(ctx context.Context, serviceName string) ([]string, error) {
+func (r *Registry) ServiceAddress(ctx context.Context, serviceName string) ([]string, error) {
 	r.RLock()
 	defer r.RUnlock()
 	if len(r.serviceAddrs[servicename(serviceName)]) == 0 {
