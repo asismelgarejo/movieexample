@@ -25,12 +25,12 @@ import (
 const serviceName = "movie"
 
 func main() {
-	// var port int
-	// flag.IntVar(&port, "port", 8083, "API handler port")
-	// flag.Parse()
-	// log.Printf("Starting the movie service on port %v", port)
+	baseFile := "base_dev.yaml"
+	if os.Getenv("mode") == "production" {
+		baseFile = "base_prod.yaml"
+	}
 
-	f, err := os.Open("base.yaml")
+	f, err := os.Open(fmt.Sprintf("./configs/%v", baseFile))
 	if err != nil {
 		panic(err)
 	}
@@ -41,15 +41,14 @@ func main() {
 	}
 	log.Printf("Starting the movie service on port %v", cfg.GRPCConfig.Port)
 
-	registry, err := consul.NewRegistry(fmt.Sprintf("go_consul:%v", cfg.ConsulConfig.Port))
+	registry, err := consul.NewRegistry(fmt.Sprintf("%v:%v", cfg.ConsulConfig.Addr, cfg.ConsulConfig.Port))
 	if err != nil {
 		panic(err)
 	}
 
 	ctx := context.Background()
 	instanceID := discovery.GenerateInstanceID(serviceName)
-	// if err = registry.Register(ctx, instanceID, serviceName, fmt.Sprintf("%v:%v", "localhost", cfg.GRPCConfig.Port)); err != nil {
-	if err = registry.Register(ctx, instanceID, serviceName, fmt.Sprintf("%v:%v", "container_movie", cfg.GRPCConfig.Port)); err != nil {
+	if err = registry.Register(ctx, instanceID, serviceName, fmt.Sprintf("%v:%v", cfg.GRPCConfig.Addr, cfg.GRPCConfig.Port)); err != nil {
 		panic(err)
 	}
 	go func() {
@@ -83,5 +82,5 @@ func main() {
 	httpHandler := httphandler.New(ctrl)
 
 	http.Handle("/movie", http.HandlerFunc(httpHandler.GetMovieDetails))
-	log.Panic(http.ListenAndServe(fmt.Sprintf(":%v", cfg.APIConfig.Port), nil))
+	log.Panic(http.ListenAndServe(fmt.Sprintf(":%v", cfg.HTTPConfig.Port), nil))
 }

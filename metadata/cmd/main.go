@@ -23,11 +23,12 @@ import (
 const serviceName = "metadata"
 
 func main() {
-	// var port int
-	// flag.IntVar(&port, "port", 8081, "API handler port")
-	// flag.Parse()
+	baseFile := "base_dev.yaml"
+	if os.Getenv("mode") == "production" {
+		baseFile = "base_prod.yaml"
+	}
 
-	f, err := os.Open("base.yaml")
+	f, err := os.Open(fmt.Sprintf("./configs/%v", baseFile))
 	if err != nil {
 		panic(err)
 	}
@@ -36,17 +37,16 @@ func main() {
 	if err := yaml.NewDecoder(f).Decode(&cfg); err != nil {
 		panic(err)
 	}
-	log.Printf("Starting the metadata service on port %v", cfg.APIConfig.Port)
+	log.Printf("Starting the metadata service on port %v", cfg.GRPCConfig.Port)
 
-	registry, err := consul.NewRegistry(fmt.Sprintf("go_consul:%v", cfg.APIConfig.PortConsul))
+	registry, err := consul.NewRegistry(fmt.Sprintf("%v:%v", cfg.ConsulConfig.Addr, cfg.ConsulConfig.Port))
 	if err != nil {
 		panic(err)
 	}
 
 	ctx := context.Background()
 	instanceID := discovery.GenerateInstanceID(serviceName)
-	// if err = registry.Register(ctx, instanceID, serviceName, fmt.Sprintf("%v:%v", "localhost", cfg.APIConfig.Port)); err != nil {
-	if err = registry.Register(ctx, instanceID, serviceName, fmt.Sprintf("%v:%v", "container_metadata", cfg.APIConfig.Port)); err != nil {
+	if err = registry.Register(ctx, instanceID, serviceName, fmt.Sprintf("%v:%v", cfg.GRPCConfig.Addr, cfg.GRPCConfig.Port)); err != nil {
 		panic(err)
 	}
 
@@ -61,7 +61,7 @@ func main() {
 
 	defer registry.Deregister(ctx, instanceID, serviceName)
 
-	repo, err := repository.New()
+	repo, err := repository.New(cfg.DBConfig.StrConn)
 	if err != nil {
 		panic(err)
 	}
@@ -69,8 +69,8 @@ func main() {
 	ctrl := controller.New(repo)
 
 	h := grpchandler.New(ctrl)
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%s", cfg.APIConfig.Port)) // An empty string to listen on all available network interfaces.
-	// lis, err := net.Listen("tcp", fmt.Sprintf("localhost:%s", cfg.APIConfig.Port))
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%s", cfg.GRPCConfig.Port)) // An empty string to listen on all available network interfaces.
+	// lis, err := net.Listen("tcp", fmt.Sprintf("localhost:%s", cfg.GRPCConfig.Port))
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}

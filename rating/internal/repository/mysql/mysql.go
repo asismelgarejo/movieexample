@@ -13,8 +13,8 @@ type Repository struct {
 	db *sql.DB
 }
 
-func New() (*Repository, error) {
-	db, err := sql.Open("mysql", "root:password@tcp(movieexample_db:3306)/movieexample")
+func New(strConn string) (*Repository, error) {
+	db, err := sql.Open("mysql", strConn)
 	if err != nil {
 		return nil, err
 	}

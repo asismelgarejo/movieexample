@@ -1,0 +1,8 @@
+grpc:
+  port: 8086
+  addr: container_metadata
+consul:
+  port: 8500
+  addr: go_consul
+database:
+  strConn: root:password@tcp(movieexample_db:3306)/movieexample

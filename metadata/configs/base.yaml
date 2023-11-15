@@ -1,3 +1,0 @@
-api:
-  port: 8086
-  port_consul: 8500

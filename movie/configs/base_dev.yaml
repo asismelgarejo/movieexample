@@ -1,0 +1,9 @@
+http:
+  port: 8084
+  addr: localhost
+grpc:
+  port: 8083
+  addr: localhost
+consul:
+  port: 8500
+  addr: localhost

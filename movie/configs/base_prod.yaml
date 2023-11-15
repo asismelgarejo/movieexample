@@ -1,0 +1,9 @@
+http:
+  port: 8084
+  addr: localhost
+grpc:
+  port: 8083
+  addr: container_movie
+consul:
+  port: 8500
+  addr: go_consul

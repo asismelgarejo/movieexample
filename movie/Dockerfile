@@ -1,5 +1,6 @@
 FROM alpine:latest
 COPY exe/main .
-COPY configs/. .
+COPY configs/. ./configs/
 EXPOSE 8083
+ENV mode="production"
 CMD ["/main"]

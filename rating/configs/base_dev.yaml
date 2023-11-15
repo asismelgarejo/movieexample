@@ -1,0 +1,8 @@
+grpc:
+  port: 8082
+  addr: localhost
+consul:
+  port: 8500
+  addr: localhost
+database:
+  strConn: root:password@/movieexample

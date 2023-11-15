@@ -1,17 +1,19 @@
 package main
 
 type serviceConfig struct {
-	APIConfig    apiConfig    `yaml:"api"`
 	GRPCConfig   grpcConfig   `yaml:"grpc"`
 	ConsulConfig consulConfig `yaml:"consul"`
-}
-type apiConfig struct {
-	Port       string `yaml:"port"`
-	PortConsul string `yaml:"port_consul"`
+	HTTPConfig   httpConfig   `yaml:"http"`
 }
 type grpcConfig struct {
 	Port string `yaml:"port"`
+	Addr string `yaml:"addr"`
+}
+type httpConfig struct {
+	Port string `yaml:"port"`
+	Addr string `yaml:"addr"`
 }
 type consulConfig struct {
 	Port string `yaml:"port"`
+	Addr string `yaml:"addr"`
 }
